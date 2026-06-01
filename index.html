@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Council App Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">No-code app planning with real AI providers</p>
+          <h1>Build an app idea with four AI advisors.</h1>
+          <p class="hero-text">
+            Type your idea once. ChatGPT, Gemini, Grok, and Claude each respond. This app combines their advice into one clear build plan.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="runCouncil" class="primary-button">Ask the AI council</button>
+          <button id="loadExample" class="secondary-button">Use example idea</button>
+        </div>
+      </header>
+
+      <section class="map-panel" aria-label="How the app works">
+        <article class="map-step active" data-phase="independent">
+          <span class="step-number">1</span>
+          <strong>You type an idea</strong>
+          <p>Write it like you would text a friend.</p>
+        </article>
+        <span class="map-line"></span>
+        <article class="map-step" data-phase="critique">
+          <span class="step-number">2</span>
+          <strong>Four AIs answer</strong>
+          <p>Each one gives its own advice.</p>
+        </article>
+        <span class="map-line"></span>
+        <article class="map-step" data-phase="consensus">
+          <span class="step-number">3</span>
+          <strong>The app compares</strong>
+          <p>It keeps the best ideas and warnings.</p>
+        </article>
+        <span class="map-line"></span>
+        <article class="map-step" data-phase="build">
+          <span class="step-number">4</span>
+          <strong>You get a plan</strong>
+          <p>Features, risks, and next steps.</p>
+        </article>
+      </section>
+
+      <section class="main-grid">
+        <section class="idea-card" aria-labelledby="idea-title">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">Step 1</p>
+              <h2 id="idea-title">Describe your app idea</h2>
+            </div>
+            <span id="statusBadge" class="status-badge">Ready</span>
+          </div>
+
+          <label class="large-label" for="briefInput">What should the app do?</label>
+          <textarea id="briefInput" spellcheck="true">I want to create an app that uses the combined consensus of ChatGPT, Gemini, Grok, and Claude to make apps that are fully thought through by every major AI.</textarea>
+
+          <div class="button-row">
+            <button id="clearBrief" class="secondary-button">Clear idea</button>
+            <button class="primary-button" id="runCouncilBottom">Ask the AI council</button>
+          </div>
+        </section>
+
+        <aside class="setup-card" aria-labelledby="setup-title">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">Step 2</p>
+              <h2 id="setup-title">Connect the real AIs</h2>
+            </div>
+          </div>
+
+          <p class="plain-note">
+            API keys are private passwords. You create them on each AI company's website, then paste them into one local file named <strong>.env</strong>.
+          </p>
+
+          <div id="modelList" class="ai-grid"></div>
+
+          <div class="copy-box">
+            <div class="copy-box-heading">
+              <strong>Your paste template</strong>
+              <button id="copyEnv" class="small-button">Copy</button>
+            </div>
+            <pre id="envTemplate" class="env-template">OPENAI_API_KEY=paste_key_here
+OPENAI_MODEL=gpt-5-mini
+
+GEMINI_API_KEY=paste_key_here
+GEMINI_MODEL=gemini-2.5-flash
+
+XAI_API_KEY=paste_key_here
+XAI_MODEL=grok-4.20
+
+ANTHROPIC_API_KEY=paste_key_here
+ANTHROPIC_MODEL=claude-sonnet-4-5</pre>
+          </div>
+        </aside>
+      </section>
+
+      <section class="support-grid">
+        <article class="guide-card">
+          <p class="section-kicker">Step 3</p>
+          <h2>Start the app</h2>
+          <div class="simple-list">
+            <p><span>1</span> Make a file called <strong>.env</strong>.</p>
+            <p><span>2</span> Paste the key template into it.</p>
+            <p><span>3</span> Replace each <strong>paste_key_here</strong>.</p>
+            <p><span>4</span> Run <strong>node server.js</strong>.</p>
+            <p><span>5</span> Open <strong>http://localhost:8787</strong>.</p>
+          </div>
+        </article>
+
+        <article class="settings-card">
+          <p class="section-kicker">Optional</p>
+          <h2>How careful should the council be?</h2>
+          <label class="control-row">
+            <span>Agreement style</span>
+            <select id="agreementLevel">
+              <option value="majority">Best overall answer</option>
+              <option value="unanimous">Only if all agree</option>
+              <option value="weighted">Strongest AI gets more weight</option>
+            </select>
+          </label>
+          <label class="control-row">
+            <span>Risk checking</span>
+            <input id="riskDepth" type="range" min="1" max="5" value="4" />
+          </label>
+          <label class="toggle-row">
+            <input id="includeTickets" type="checkbox" checked />
+            <span>Include build steps</span>
+          </label>
+          <label class="toggle-row">
+            <input id="includeQuestions" type="checkbox" checked />
+            <span>Include questions to answer later</span>
+          </label>
+        </article>
+      </section>
+
+      <section class="results-card" aria-labelledby="results-title">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Step 4</p>
+            <h2 id="results-title">Your app plan appears here</h2>
+          </div>
+          <button id="copyOutput" class="small-button">Copy plan</button>
+        </div>
+        <div id="results" class="results empty-state">
+          Press "Ask the AI council." If your keys are connected, this uses the real AIs. If not, it shows demo mode so you can still see how it works.
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

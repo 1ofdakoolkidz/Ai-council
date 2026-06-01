@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ai-council-app-builder
+    env: node
+    plan: starter
+    buildCommand: ""
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        sync: false
+      - key: XAI_API_KEY
+        sync: false
+      - key: XAI_MODEL
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_MODEL
+        sync: false
